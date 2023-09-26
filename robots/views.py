@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from .models import Robot
 
 
-# Валидация данных
+# валидация данных
 def validate_json_data(data: dict) -> JsonResponse | None:
     required_keys = {'model', 'version', 'created'}
     if not set(data.keys()) == required_keys:

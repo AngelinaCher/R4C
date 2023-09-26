@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Отчёт</title>
+</head>
+<body>
+    <h1>Сформировать отчёт</h1>
+    <form id="modelDateForm">
+        {% csrf_token %}
+        <input type="submit" value="Сформировать" />
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+
+        // отпралвение данных на сервер 
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById("modelDateForm");
+            form.addEventListener("submit", function(event) {
+                event.preventDefault(); 
+
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value; 
+
+                axios.post('{% url "generate_report" %}', {}, {
+                    headers: {
+                        'X-CSRFToken': csrfToken
+                    }
+                })
+                .then(function(response) {
+                    const downloadUrl = response.data.download_url; 
+
+                    const link = document.createElement('a');
+                    link.setAttribute('href', downloadUrl);
+                    link.innerText = 'Скачать отчёт'; 
+
+
+                    const div = document.createElement('div');
+                    const p = document.createElement('p');
+                    p.innerText = 'Отчёт успешно сформирован';
+                    div.appendChild(p);
+                    div.appendChild(link);
+
+                    document.body.appendChild(div);
+                })
+                .catch(function(error) {
+                    const p = document.createElement('p');
+                    p.innerText = 'Произошла ошибка';
+                    div.appendChild(p);
+                    console.error(error);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
