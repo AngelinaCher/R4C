@@ -5,4 +5,4 @@ from .models import Robot
 @admin.register(Robot)
 class RobotAdmin(admin.ModelAdmin):
     """ Регистрация модели Робот """
-    pass
+    list_display = ['serial', 'is_available']
