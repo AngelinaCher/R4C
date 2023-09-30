@@ -38,7 +38,7 @@ def create_robot_record(request) -> JsonResponse:
             return JsonResponse({'error': f'В данных JSON отсутствует ключ: {e}'}, status=400)
 
         try:
-            robot.clean()
+            robot.full_clean()
             robot.save()
         except ValidationError as e:
             return JsonResponse({'error': f"Ошибка валидации: {str(e)}"}, status=400)
