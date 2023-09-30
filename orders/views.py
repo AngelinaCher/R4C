@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.db.models import Count
-from .models import Order
+from .models import Order, Status
 from .report_generator.excel_generator import get_report
 
 
@@ -12,7 +12,7 @@ def generate_report(request):
     if request.method == 'POST':
         end_date = datetime.now()
         start_date = end_date - timedelta(days=7)
-        robot_series_data = (Order.objects.filter(order_date__range=(start_date, end_date))
+        robot_series_data = (Order.objects.filter(order_date__range=(start_date, end_date), status=Status.COMPLETED)
                              .values('robot_serial')
                              .annotate(count=Count('robot_serial'))
                              .order_by('robot_serial'))
