@@ -63,6 +63,8 @@
       + [signals.py](orders%2Fsignals%2Fsignals.py) - проверка заказов со статусом "Ожидание" и уведомление клиентов, при добавлении робота
 * [R4C](R4C) - проект R4C
 * [robots](robots) - приложение роботы
+    + [services](robots%2Fservices) - бизнес-логика по работе с роботами
+        + [add_robot.py](robots%2Fservices%2Fadd_robot.py) - добавление робота
 * [utils](utils) - утилиты
    + [excel_generator.py](utils%2Fexcel_generator.py) - формирование excel-файла
    + [send_notification.py](utils%2Fsend_notification.py) - отправка уведомления на email
