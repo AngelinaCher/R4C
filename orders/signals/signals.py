@@ -12,6 +12,5 @@ def notify_customer(sender, instance, created, **kwargs) -> None:
         waiting_orders = Order.objects.filter(robot_serial=instance.serial, status=Status.WAITING)
         for order in waiting_orders:
             send_notification(customer=order.customer.email, robot_serial=order.robot_serial)
-            print('Сообщение отправилось')
             order.status = Status.COMPLETED
             order.save()
