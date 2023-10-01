@@ -8,6 +8,7 @@ from utils.send_notification import send_notification
 
 @receiver(post_save, sender=Robot)
 def notify_customer(sender, instance, created, **kwargs) -> None:
+    """ Уведомление клиента, если он ждёт добавленного робота """
     if created:
         waiting_orders = Order.objects.filter(robot_serial=instance.serial, status=Status.WAITING)
         for order in waiting_orders:

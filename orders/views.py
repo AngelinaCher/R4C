@@ -6,8 +6,8 @@ from orders.services.create_link_to_report import send_link
 from orders.services.create_order import create_order
 
 
-# получение прямой ссылки на скачивание отчёта
 def generate_report(request) -> JsonResponse:
+    """ Получение прямой ссылки на скачивание отчёта """
     if request.method == 'POST':
         response_data = send_link(request)
         return JsonResponse(response_data, status=201)
@@ -15,14 +15,14 @@ def generate_report(request) -> JsonResponse:
         return JsonResponse({'error': 'Метод не поддерживается'}, status=405)
 
 
-# рендер страницы с отчётом
 def render_report_page(request):
+    """ Рендер страницы с отчётом """
     return render(request, template_name='orders/report_excel.html')
 
 
-# обработка заказа
 @csrf_exempt
 def process_order(request) -> JsonResponse:
+    """ Обработка заказа """
     if request.method == "POST":
         try:
             data = json.loads(request.body)

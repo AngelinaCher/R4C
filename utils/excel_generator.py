@@ -11,9 +11,9 @@ class Report:
         self.start_date = start_date
         self.end_date = end_date
 
-    # создание книги
     @staticmethod
     def _create_workbook(models: set) -> Workbook:
+        """ Создание книги и её структуры """
         wb = Workbook()
         sheets = [wb.create_sheet(model) for model in models]
         for sheet in sheets:
@@ -24,9 +24,9 @@ class Report:
             wb.remove(wb['Sheet'])
         return wb
 
-    # заполнение листа
     @staticmethod
     def _fill_sheet(workbook: Workbook, sheet_name: str, order_info: dict) -> Workbook:
+        """ Заполнение листов книги по моделям роботов """
         model, version = order_info['robot_serial'].split('-')
         count = order_info['count']
         wb = workbook
@@ -35,8 +35,8 @@ class Report:
 
         return wb
 
-    # создание отчёта
     def _create_report(self) -> Workbook:
+        """ Создание отчёта """
         models = set([model['robot_serial'].split('-')[0] for model in self.robot_serial_data])
         wb = self._create_workbook(models)
         for sheet in wb.sheetnames:
@@ -45,8 +45,8 @@ class Report:
                     wb = self._fill_sheet(workbook=wb, sheet_name=sheet, order_info=order_info)
         return wb
 
-    # получение пути отчёта
     def get_path_with_report(self) -> str:
+        """ Формирование пути до сформированного отчёта """
         start_date_str = self.start_date.strftime('%d.%m.%Y')
         end_date_str = self.end_date.strftime('%d.%m.%Y')
         file_name = f'report-{start_date_str}-{end_date_str}.xlsx'

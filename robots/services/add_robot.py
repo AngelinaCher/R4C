@@ -3,8 +3,8 @@ from django.core.exceptions import ValidationError
 from robots.models import Robot
 
 
-# валидация данных
 def validate_json_data(data: dict) -> JsonResponse | None:
+    """ Валидация данных, полученных из JSON """
     required_keys = {'model', 'version', 'created'}
     if not set(data.keys()) == required_keys:
         return JsonResponse({'error': 'Неверные ключи в данных JSON.'}, status=400)
@@ -14,6 +14,7 @@ def validate_json_data(data: dict) -> JsonResponse | None:
 
 
 def create_robot(data: dict) -> JsonResponse:
+    """ Валидация и добавление робота в БД """
     robot = Robot()
     try:
         robot.serial = f"{data.get('model')}-{data.get('version')}"

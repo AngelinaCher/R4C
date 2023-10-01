@@ -4,9 +4,9 @@ from django.views.decorators.csrf import csrf_exempt
 from robots.services.add_robot import validate_json_data, create_robot
 
 
-# добавление записи
 @csrf_exempt
 def create_robot_record(request) -> JsonResponse:
+    """ Обработка запроса на добавление записи в таблицу Робот """
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
